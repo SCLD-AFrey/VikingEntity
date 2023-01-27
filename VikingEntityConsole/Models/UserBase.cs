@@ -19,10 +19,12 @@ public class UserBase
 
     public void ChangePassword(string username, string newPassword)
     {
+        PasswordCrypt crypt = new PasswordCrypt();
         var user = Users.FirstOrDefault(x => x.UserName == username);
         if (user != null)
         {
-            user.Password = newPassword;
+            user.Password = crypt.GeneratePasswordHash(newPassword, out var salt);
+            user.Salt = salt;
         }
         Commit();
         

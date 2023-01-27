@@ -7,6 +7,7 @@ public class User
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
+    public byte[] Salt { get; set; } = Array.Empty<byte>();
     public bool RequirePasswordChange { get; set; } = false;
     
     public string FullName

@@ -47,11 +47,13 @@ public static class AppFiles
         {
             var obj = new UserBase();
             obj.Users = new List<User>();
+            PasswordCrypt crypt = new PasswordCrypt();
             obj.Users.Add(new User()
             {
                 Oid = obj.GetNextOid() + 1,
                 UserName = "admin",
-                Password = "password",
+                Password = crypt.GeneratePasswordHash("password", out var salt),
+                Salt = salt,
                 FirstName = "Administrator",
                 LastName = "User",
                 RequirePasswordChange = true
