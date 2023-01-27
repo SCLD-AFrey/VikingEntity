@@ -17,6 +17,18 @@ public class UserBase
         }
     }
 
+    public void ChangePassword(string username, string newPassword)
+    {
+        var user = Users.FirstOrDefault(x => x.UserName == username);
+        if (user != null)
+        {
+            user.Password = newPassword;
+        }
+        Commit();
+        
+    }
+    
+    
     public void Load()
     {
         if (File.Exists(AppFiles.UsersFile))
