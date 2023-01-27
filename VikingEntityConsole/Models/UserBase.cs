@@ -6,37 +6,22 @@ namespace VikingEntityConsole.Models;
 
 public class UserBase
 {
-    public List<User>? Users { get; private set; }
-
-    public UserBase()
-    {
-        if (File.Exists(AppFiles.UsersFile))
-        {
-            Load();
-        }
-        else
-        {
-            Users = new List<User>();
-        }
-    }
+    public List<User>? Users { get; set; }
 
     public int GetNextOid()
     {
-        if (Users!.Count > 0)
-        {
+        try{
             return Users.Max(x => x.Oid) + 1;
-        }
-        else
-        {
+        } catch (Exception) {
             return 1;
         }
     }
 
-    private void Load()
+    public void Load()
     {
-        if (File.Exists(AppFiles.SettingsFile))
+        if (File.Exists(AppFiles.UsersFile))
         {
-            var jsonString = File.ReadAllText(AppFiles.SettingsFile);
+            var jsonString = File.ReadAllText(AppFiles.UsersFile);
             Users =  JsonSerializer.Deserialize<List<User>>(jsonString);
         }
         else

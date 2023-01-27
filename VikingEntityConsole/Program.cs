@@ -10,8 +10,7 @@ static class Program
     static void Main(string[] args)
     {
         AppFiles.Create();
-        
-        
+
         var mainMenu = new Display.Main();
         mainMenu.Display();
 

@@ -46,6 +46,7 @@ public static class AppFiles
         if (!File.Exists(UsersFile))
         {
             var obj = new UserBase();
+            obj.Users = new List<User>();
             obj.Users.Add(new User()
             {
                 Oid = obj.GetNextOid() + 1,
@@ -55,5 +56,8 @@ public static class AppFiles
             });
             obj.Commit();
         }
+        
+        Program._settings.Load();
+        Program._userBase.Load();
     }
 }

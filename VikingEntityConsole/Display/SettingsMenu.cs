@@ -15,6 +15,11 @@ public class SettingsMenu : AbstractMenu
 
     private void DisplaySettings()
     {
+        var settings = Program._settings;
+        
+    }
+    private void ChangeSettings()
+    {
     }
 
 
