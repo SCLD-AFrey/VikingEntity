@@ -6,7 +6,7 @@ namespace VikingEntityConsole.Models;
 
 public class UserBase
 {
-    public List<User>? Users { get; set; }
+    public List<User>? Users { get; private set; }
 
     public UserBase()
     {
@@ -22,7 +22,7 @@ public class UserBase
 
     public int GetNextOid()
     {
-        if (Users.Count > 0)
+        if (Users!.Count > 0)
         {
             return Users.Max(x => x.Oid) + 1;
         }
@@ -32,7 +32,7 @@ public class UserBase
         }
     }
 
-    public void Load()
+    private void Load()
     {
         if (File.Exists(AppFiles.SettingsFile))
         {
@@ -47,9 +47,9 @@ public class UserBase
 
     public void Commit()
     {
-        JsonSerializerOptions _options = 
+        JsonSerializerOptions options = 
             new() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
-        var jsonString = JsonSerializer.Serialize(Users, _options);
+        var jsonString = JsonSerializer.Serialize(Users, options);
         File.WriteAllText(AppFiles.UsersFile, jsonString);
     }
 }
