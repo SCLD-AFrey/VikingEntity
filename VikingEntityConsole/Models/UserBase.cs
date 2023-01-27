@@ -49,7 +49,7 @@ public class UserBase
     {
         JsonSerializerOptions _options = 
             new() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
-        var jsonString = JsonSerializer.Serialize(this, _options);
-        File.WriteAllText(AppFiles.SettingsFile, jsonString);
+        var jsonString = JsonSerializer.Serialize(Users, _options);
+        File.WriteAllText(AppFiles.UsersFile, jsonString);
     }
 }
