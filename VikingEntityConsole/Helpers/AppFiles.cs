@@ -52,6 +52,8 @@ public static class AppFiles
                 Oid = obj.GetNextOid() + 1,
                 UserName = "admin",
                 Password = "password",
+                FirstName = "Administrator",
+                LastName = "User",
                 RequirePasswordChange = true
             });
             obj.Commit();

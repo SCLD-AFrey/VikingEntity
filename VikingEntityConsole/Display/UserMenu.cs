@@ -19,9 +19,10 @@ public class UserMenu : AbstractMenu
 
     private void DisplayUsers()
     {
+        Messages.Results($"{_userBase.Users!.Count} users found");
         foreach (var user in _userBase.Users!)
         {
-            Messages.Results($"{user.Oid, 3}. {user.UserName}");
+            Messages.Results($"{user.Oid, 3}. {user.UserName, 20} {user.FullName}");
         }
     }
 }
