@@ -1,4 +1,5 @@
-﻿using VikingEntityConsole.Helpers.Menu;
+﻿using VikingEntityConsole.Helpers;
+using VikingEntityConsole.Helpers.Menu;
 
 namespace VikingEntityConsole.Display;
 
@@ -16,7 +17,12 @@ public class SettingsMenu : AbstractMenu
     private void DisplaySettings()
     {
         var settings = Program._settings;
-        
+        int i = 0;
+        foreach (var setting in settings.GetType().GetProperties())
+        {
+            i++;
+            Messages.Results($"{i, 3}. {setting.Name} = {setting.GetValue(settings)!.ToString()}");
+        }
     }
     private void ChangeSettings()
     {
