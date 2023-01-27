@@ -8,6 +8,25 @@ public class UserBase
 {
     public List<User>? Users { get; set; }
 
+    public bool Login(string username, string password)
+    {
+        var user = Users?.FirstOrDefault(u => u.UserName == username);
+        if (user != null)
+        {
+            PasswordCrypt crypt = new PasswordCrypt();
+            if (crypt.VerifyPassword(password, user.Password, user.Salt))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        Console.WriteLine("Login failed");
+        return false;
+    }
+
     public int GetNextOid()
     {
         try{
