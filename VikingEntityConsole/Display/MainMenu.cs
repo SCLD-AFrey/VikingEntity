@@ -1,4 +1,4 @@
-﻿using VikingEntityConsole.Helpers.Menu;
+﻿using VikingCommon;
 
 namespace VikingEntityConsole.Display;
 

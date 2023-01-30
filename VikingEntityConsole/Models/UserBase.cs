@@ -8,7 +8,7 @@ public class UserBase
 {
     public List<User>? Users { get; set; }
 
-    public bool Login(string username, string password)
+    public User Login(string username, string password)
     {
         var user = Users?.FirstOrDefault(u => u.UserName == username);
         if (user != null)
@@ -16,27 +16,22 @@ public class UserBase
             PasswordCrypt crypt = new PasswordCrypt();
             if (crypt.VerifyPassword(password, user.Password, user.Salt))
             {
-                return true;
+                return user;
             }
             else
             {
-                return false;
+                return new User();
             }
         }
-        Console.WriteLine("Login failed");
-        return false;
+        return new User();
     }
 
     public int GetNextOid()
     {
-        try{
-            return Users.Max(x => x.Oid) + 1;
-        } catch (Exception) {
-            return 1;
-        }
+        return Users?.Max(u => u.Oid) + 1 ?? 1;
     }
 
-    public void ChangePassword(string username, string newPassword)
+    public User ChangePassword(string username, string newPassword)
     {
         PasswordCrypt crypt = new PasswordCrypt();
         var user = Users.FirstOrDefault(x => x.UserName == username);
@@ -44,9 +39,10 @@ public class UserBase
         {
             user.Password = crypt.GeneratePasswordHash(newPassword, out var salt);
             user.Salt = salt;
+            user.RequirePasswordChange = false;
         }
         Commit();
-        
+        return user;
     }
     
     
@@ -69,5 +65,25 @@ public class UserBase
             new() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
         var jsonString = JsonSerializer.Serialize(Users, options);
         File.WriteAllText(AppFiles.UsersFile, jsonString);
+    }
+
+    public User GetById(int oid)
+    {
+        var user = Users?.FirstOrDefault(x => x.Oid == oid);
+        if (user == null)
+        {
+            return new User();
+        }
+        return user;
+    }
+
+    public User GetByUsername(string username)
+    {
+        var user = Users?.FirstOrDefault(x => x.UserName == username);
+        if (user == null)
+        {
+            return new User();
+        }
+        return user;
     }
 }

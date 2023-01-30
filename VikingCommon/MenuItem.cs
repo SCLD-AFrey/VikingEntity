@@ -1,4 +1,4 @@
-﻿namespace VikingEntityConsole.Helpers.Menu;
+﻿namespace VikingCommon;
 
     public sealed class MenuItem
     {

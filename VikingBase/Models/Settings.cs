@@ -1,8 +1,9 @@
-﻿using System.Text.Json;
+﻿using System.IO;
+using System.Text.Json;
 using System.Text.Json.Serialization;
-using VikingEntityConsole.Helpers;
+using VikingBase.Models;
 
-namespace VikingEntityConsole.Models;
+namespace VikingBase.Models;
 
 public class Settings
 {
@@ -11,7 +12,7 @@ public class Settings
     public string AppDescription { get; set; } = "Viking Tools is a collection of tools for the Viking Age.";
     public string AppAuthor { get; set; } = "Viking Tools";
     public bool RequireLogin { get; set; } = true;
-    public User LastUser { get; set; } = new User();
+    //public User LastUser { get; set; } = new User();
 
     public void Commit()
     {
@@ -39,6 +40,6 @@ public class Settings
         AppDescription = sets.AppDescription;
         AppAuthor = sets.AppAuthor;
         RequireLogin = sets.RequireLogin;
-        LastUser = sets.LastUser;
+        //LastUser = sets.LastUser;
     }
 }

@@ -1,5 +1,5 @@
 ﻿using VikingEntityConsole.Helpers;
-using VikingEntityConsole.Helpers.Menu;
+using VikingCommon;
 
 namespace VikingEntityConsole.Display;
 

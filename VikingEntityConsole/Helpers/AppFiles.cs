@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using VikingCommon.Models;
 using VikingEntityConsole.Models;
 
 namespace VikingEntityConsole.Helpers;

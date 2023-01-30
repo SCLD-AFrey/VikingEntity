@@ -1,4 +1,4 @@
-﻿namespace VikingEntityConsole.Models;
+﻿namespace VikingBase.Models;
 
 public interface ISettings
 {

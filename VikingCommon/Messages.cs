@@ -1,4 +1,4 @@
-﻿namespace VikingEntityConsole.Helpers;
+﻿namespace VikingCommon;
 
 public static class Messages
 {

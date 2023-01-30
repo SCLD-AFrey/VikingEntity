@@ -17,6 +17,27 @@ public class User
             return $"{FirstName} {LastName}";
         }
     }
-    
+
+    public User Get()
+    {
+        var userBase = new UserBase();
+        userBase.Load();
+        User user;
+        if (int.TryParse(Oid.ToString(), out int oid))
+        {
+            user = userBase.GetById(oid);
+        }
+        else
+        {
+            user = userBase.GetByUsername(UserName);
+        }
+
+        if (user == null)
+        {
+            return new User();
+        }
+
+        return user;
+    }
 
 }
