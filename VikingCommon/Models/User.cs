@@ -9,6 +9,7 @@ public class User : IUser
     public string Password { get; set; } = string.Empty;
     public byte[] Salt { get; set; } = Array.Empty<byte>();
     public bool RequirePasswordChange { get; set; } = false;
+    public DateTime LastLogin { get; set; }
 
     public void Save()
     {

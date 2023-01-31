@@ -38,6 +38,24 @@ public class UserBase : List<User>
         }
     }
     
+    public User Login(string p_userName, string p_password, out string p_message)
+    {
+        p_message = "";
+        var user = this.FirstOrDefault(u => u.UserName == p_userName);
+        if (user == null)
+        {
+            p_message = $"User '{p_userName}' not found.";
+            return new User();
+        }
+        PasswordHash hash = new PasswordHash();
+        if (!hash.VerifyPassword(p_password, user.Password, user.Salt))
+        {
+            p_message = $"User '{p_userName}' used an invalid password.";
+            return new User();
+        }
+        return user;
+    }
+    
     
 
     
