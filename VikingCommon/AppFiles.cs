@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Headers;
+using System.Text;
 using VikingCommon.Models;
 
 namespace VikingCommon;
@@ -8,7 +9,8 @@ public class AppFiles
     private static string _appName = ".vikingentity";
     //Folders
     public static readonly string _appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), ".vikingentity");
-    public static string _appDataPathUser = Path.Combine(_appDataPath, "imports");
+    public static string _appDataPathImports = Path.Combine(_appDataPath, "imports");
+    public static string _appDataPathLogs = Path.Combine(_appDataPath, "logs");
     
     //Files
     public static string _appFileSettings = Path.Combine(_appDataPath, "settings.json");
@@ -21,18 +23,21 @@ public class AppFiles
             if(force) SmartDeleteDirectory(_appDataPath);
             Directory.CreateDirectory(_appDataPath);
         }
-        if (!Directory.Exists(_appDataPathUser) || force)
+        if (!Directory.Exists(_appDataPathImports) || force)
         {
-            if(force) SmartDeleteFile(_appDataPathUser);
-            Directory.CreateDirectory(_appDataPathUser);
+            if(force) SmartDeleteFile(_appDataPathImports);
+            Directory.CreateDirectory(_appDataPathImports);
         }
-
+        if (!Directory.Exists(_appDataPathLogs) || force)
+        {
+            if(force) SmartDeleteFile(_appDataPathLogs);
+            Directory.CreateDirectory(_appDataPathLogs);
+        }
         if (!File.Exists(_appFileSettings))
         {
             var obj = new Settings();
             obj.Commit();
         }
-
         if (!File.Exists(_appFileUsers))
         {
             UserBase obj = new UserBase();
@@ -48,6 +53,8 @@ public class AppFiles
             });
             obj.Commit();
         }
+        
+        
     }
 
     public static void SmartDeleteDirectory(string directory)

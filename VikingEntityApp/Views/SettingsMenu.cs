@@ -1,5 +1,7 @@
-﻿using VikingCommon;
+﻿using System.ComponentModel;
+using VikingCommon;
 using VikingCommon.Models;
+using WindowsFirewallHelper;
 
 namespace VikingEntityConsole.Views;
 
@@ -10,7 +12,31 @@ public class SettingsMenu : AbstractMenu
     {
         AddMenuItem(new MenuItem(1, "View Settings", ViewSettings));
         AddMenuItem(new MenuItem(2, "Change Settings", ChangeSettings));
-        AddMenuItem(new MenuItem(3, "Return").SetAsExitOption());
+        AddMenuItem(new MenuItem(3, "View Firewall Rules", ViewFirewallRules));
+        AddMenuItem(new MenuItem(4, "Return").SetAsExitOption());
+    }
+
+    private void ViewFirewallRules()
+    {
+        var allRules = FirewallManager.Instance.Rules;
+        int i = 0;
+        foreach (var rule in allRules)
+        {
+            i++;
+            Messages.Results($"{i, 3}. {rule.FriendlyName} {rule.Direction} {rule.Action.ToString()} {rule.Protocol.ToString()} {rule.LocalPorts} {rule.RemotePorts} {rule.LocalAddresses} {rule.RemoteAddresses}");
+
+            if (i % 10 == 0)
+            {
+                Messages.Information($"Press 'X' to exit or any other key to continue");
+                var inp = Console.ReadKey();
+                Console.WriteLine("");
+                if (inp.Key == ConsoleKey.X)
+                {
+                    break;
+                }
+            }
+            
+        }
     }
 
     private void ChangeSettings()

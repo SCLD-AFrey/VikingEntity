@@ -9,7 +9,6 @@ public class Settings : ISettings
     public string AppVersion { get; set; } = "0.1.0";
     public string AppDescription { get; set; } = "Viking Tools is a collection of tools for the Viking Age.";
     public string AppAuthor { get; set; } = "Viking Tools";
-    public bool RequireLogin { get; set; } = true;
     public User LastUser { get; set; } = new User();
 
     public Settings()
@@ -42,7 +41,6 @@ public class Settings : ISettings
         AppVersion = sets.AppVersion;
         AppDescription = sets.AppDescription;
         AppAuthor = sets.AppAuthor;
-        RequireLogin = sets.RequireLogin;
         LastUser = sets.LastUser;
     }
 }
