@@ -13,6 +13,8 @@ static class Program
 
     static void Main(string[] p_args)
     {
+        Console.WindowHeight = 40;
+        Console.WindowWidth = 200;
         AppFiles.Create();
         _settings = new Settings();
         _settings.Load();
@@ -20,7 +22,10 @@ static class Program
 
         if (_settings.LastUser.Oid > 0)
         {
-            _currentUser = _settings.LastUser;
+            if (_settings.LastUser.LastLogin.AddDays(1) > DateTime.UtcNow)
+            {
+                _currentUser = _settings.LastUser;
+            }
         }
 
         while(_currentUser.Oid == 0)

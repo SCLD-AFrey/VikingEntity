@@ -1,4 +1,7 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using System.Text;
 using VikingCommon;
 using VikingCommon.Models;
 using WindowsFirewallHelper;
@@ -12,7 +15,7 @@ public class SettingsMenu : AbstractMenu
     {
         AddMenuItem(new MenuItem(1, "View Settings", ViewSettings));
         AddMenuItem(new MenuItem(2, "Change Settings", ChangeSettings));
-        AddMenuItem(new MenuItem(3, "View Firewall Rules", ViewFirewallRules));
+        AddMenuItem(new MenuItem(3, "View Firewall Rules", () => ViewFirewallRules()));
         AddMenuItem(new MenuItem(4, "Return").SetAsExitOption());
     }
 
@@ -20,12 +23,16 @@ public class SettingsMenu : AbstractMenu
     {
         var allRules = FirewallManager.Instance.Rules;
         int i = 0;
-        foreach (var rule in allRules)
+        Messages.Results($"{" ", 4} {"FriendlyName", 60} {"Enabled", 7} {"Direction", 10} {"Action", 10} {"Proto", 5}");
+        Messages.Results($"{" ", 4} {"------------", 60} {"-------", 7} {"---------", 10} {"------", 10} {"-----", 5}");
+
+        foreach (var rule in allRules.OrderBy(r => r.Name))
         {
             i++;
-            Messages.Results($"{i, 3}. {rule.FriendlyName} {rule.Direction} {rule.Action.ToString()} {rule.Protocol.ToString()} {rule.LocalPorts} {rule.RemotePorts} {rule.LocalAddresses} {rule.RemoteAddresses}");
-
-            if (i % 10 == 0)
+            var fn = rule.FriendlyName.Length > 60 ? rule.FriendlyName.Substring(0, 60) : rule.FriendlyName;
+            Messages.Results($"{i, 3}. {fn, 60} {rule.IsEnable.ToString(), 7} {rule.Direction, 10} {rule.Action.ToString(), 10} {rule.Protocol.ToString(), 5}", (i%2==0));
+            
+            if (i % 30 == 0)
             {
                 Messages.Information($"Press 'X' to exit or any other key to continue");
                 var inp = Console.ReadKey();

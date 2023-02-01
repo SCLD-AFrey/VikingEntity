@@ -36,9 +36,9 @@ public static class Messages
         Console.WriteLine(pMessage);
         Console.ResetColor();
     }
-    public static void Results(string pMessage)
+    public static void Results(string pMessage, bool p_isAlt = false)
     {
-        Console.ForegroundColor = ConsoleColor.DarkCyan;
+        Console.ForegroundColor = p_isAlt ? ConsoleColor.DarkCyan : ConsoleColor.Cyan;
         Console.WriteLine(pMessage);
         Console.ResetColor();
     }
