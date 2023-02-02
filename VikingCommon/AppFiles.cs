@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json;
 using VikingCommon.Models;
 
 namespace VikingCommon;
@@ -15,6 +16,7 @@ public class AppFiles
     //Files
     public static string _appFileSettings = Path.Combine(_appDataPath, "settings.json");
     public static string _appFileUsers = Path.Combine(_appDataPath, "users.json");
+    public static string _appFileReviews = Path.Combine(_appDataPath, "ap-reviews.json");
 
     public static void Create(bool force = false)
     {
@@ -37,6 +39,11 @@ public class AppFiles
         {
             var obj = new Settings();
             obj.Commit();
+        }
+        if (!File.Exists(_appFileSettings))
+        {
+            var obj = new List<Review>();
+            JsonTools.SaveOptions(_appFileReviews, JsonSerializer.Serialize(obj));
         }
         if (!File.Exists(_appFileUsers))
         {
