@@ -37,7 +37,12 @@ public class UserBase : List<User>
             return 1;
         }
     }
-    
+
+    public User? GetUserByUsername(string p_userName)
+    {
+        return this.FirstOrDefault(u => u.UserName == p_userName);
+    }
+
     public User Login(string p_userName, string p_password, out string p_message)
     {
         p_message = "";
@@ -53,6 +58,29 @@ public class UserBase : List<User>
             p_message = $"User '{p_userName}' used an invalid password.";
             return new User();
         }
+
+        if (user.RequirePasswordChange)
+        {
+            string? newPassword = null;
+            string? chkPassword = null;
+            while(string.IsNullOrEmpty(newPassword) || newPassword != chkPassword)
+            {
+                Console.Write("New Password: ");
+                newPassword = Console.ReadLine();
+                Console.Write("Confirm Password: ");
+                chkPassword = Console.ReadLine();
+                if (newPassword != chkPassword)
+                {
+                    Console.WriteLine("Passwords do not match. Please try again.");
+                    newPassword = null;
+                    chkPassword = null;
+                }
+            }
+            user.Password = hash.GeneratePasswordHash(newPassword, out byte[] salt);
+            user.Salt = salt;
+            user.RequirePasswordChange = false;
+        }
+        user.LastLogin = DateTime.UtcNow;
         return user;
     }
     

@@ -10,11 +10,12 @@ public class User : IUser
     public byte[] Salt { get; set; } = Array.Empty<byte>();
     public bool RequirePasswordChange { get; set; } = false;
     public DateTime LastLogin { get; set; }
+    public List<Enums.AdminRole> Roles { get; set; } = new List<Enums.AdminRole>() { Enums.AdminRole.BasicUser };
+
+    public string FullName => $"{FirstName} {LastName}";
 
     public void Save()
     {
-        UserBase userBase = new UserBase();
-        userBase.Add(this);
-        userBase.Commit();
+        
     }
 }
