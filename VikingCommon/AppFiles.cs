@@ -7,6 +7,7 @@ namespace VikingCommon;
 
 public class AppFiles
 {
+    private static readonly string _adminUsername = "admin";
     private static string _appName = ".vikingentity";
     //Folders
     public static readonly string _appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), ".vikingentity");
@@ -17,6 +18,11 @@ public class AppFiles
     public static string _appFileSettings = Path.Combine(_appDataPath, "settings.json");
     public static string _appFileUsers = Path.Combine(_appDataPath, "users.json");
     public static string _appFileReviews = Path.Combine(_appDataPath, "ap-reviews.json");
+
+    public AppFiles()
+    {
+        Create();
+    }
 
     public static void Create(bool force = false)
     {
@@ -37,27 +43,39 @@ public class AppFiles
         }
         if (!File.Exists(_appFileSettings))
         {
-            var obj = new Settings();
+            var obj = new List<Review>();
+            JsonTools.SaveOptions(_appFileReviews, JsonSerializer.Serialize(obj));
+        }
+        bool createUsers = false;
+        if (!File.Exists(_appFileUsers))
+        {
+            createUsers = true;
+            UserBase obj = new UserBase();
+            PasswordHash hash = new PasswordHash();
+            
+            obj.Add(new User()
+            {
+                Oid = obj.GetNextOid(),
+                UserName = _adminUsername,
+                FirstName = "Admin", 
+                LastName = "User",
+                Password = hash.GeneratePasswordHash("password", out var salt),
+                Salt = salt,
+                LastLogin = DateTime.UtcNow,
+                Roles = { Enums.AdminRole.BasicUser, Enums.AdminRole.SettingsManagement, Enums.AdminRole.SettingsManagement, Enums.AdminRole.Admin }
+            });
+            
             obj.Commit();
         }
         if (!File.Exists(_appFileSettings))
         {
-            var obj = new List<Review>();
-            JsonTools.SaveOptions(_appFileReviews, JsonSerializer.Serialize(obj));
-        }
-        if (!File.Exists(_appFileUsers))
-        {
-            UserBase obj = new UserBase();
-            PasswordHash hash = new PasswordHash();
-            obj.Add(new User()
+            var obj = new Settings();
+            if (createUsers)
             {
-                Oid = obj.GetNextOid(),
-                UserName = "admin",
-                FirstName = "Admin", 
-                LastName = "User",
-                Password = hash.GeneratePasswordHash("password", out var salt),
-                Salt = salt
-            });
+                UserBase users = new UserBase();
+                users.Load();
+                obj.LastUser = users.GetUserByUsername(_adminUsername) ?? new User();
+            }
             obj.Commit();
         }
         
