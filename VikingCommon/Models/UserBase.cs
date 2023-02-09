@@ -7,7 +7,7 @@ public class UserBase : List<User>
 {
     public UserBase()
     {
-        Load();
+        //Load();
     }
     
     public void Load()
@@ -32,7 +32,9 @@ public class UserBase : List<User>
     public int GetNextOid()
     {
         try{
-            return this.Max(u => u.Oid) + 1;
+            UserBase users = new UserBase();
+            users.Load();
+            return users.Max(p_u => p_u.Oid) + 1;
         } catch (Exception) {
             return 1;
         }

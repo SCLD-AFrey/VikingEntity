@@ -7,7 +7,6 @@ namespace VikingCommon;
 
 public class AppFiles
 {
-    private static readonly string _adminUsername = "admin";
     private static string _appName = ".vikingentity";
     //Folders
     public static readonly string _appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), ".vikingentity");
@@ -18,77 +17,45 @@ public class AppFiles
     public static string _appFileSettings = Path.Combine(_appDataPath, "settings.json");
     public static string _appFileUsers = Path.Combine(_appDataPath, "users.json");
     public static string _appFileReviews = Path.Combine(_appDataPath, "ap-reviews.json");
+    
+    //API Keys
+    public static string _appChatGptApiKey = @"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";
+    
 
     public AppFiles()
     {
         Create();
     }
 
-    public static void Create(bool force = false)
+    private static void Create(bool force = false)
     {
-        if (!Directory.Exists(_appDataPath) || force)
+        if (force)
         {
-            if(force) SmartDeleteDirectory(_appDataPath);
-            Directory.CreateDirectory(_appDataPath);
+            Helpers.FileDir.SmartDeleteFolder(_appDataPath);
         }
-        if (!Directory.Exists(_appDataPathImports) || force)
-        {
-            if(force) SmartDeleteFile(_appDataPathImports);
-            Directory.CreateDirectory(_appDataPathImports);
-        }
-        if (!Directory.Exists(_appDataPathLogs) || force)
-        {
-            if(force) SmartDeleteFile(_appDataPathLogs);
-            Directory.CreateDirectory(_appDataPathLogs);
-        }
-        if (!File.Exists(_appFileSettings))
+
+        Helpers.FileDir.SmartCreateFolder(_appDataPath);
+        Helpers.FileDir.SmartCreateFolder(_appDataPathImports);
+        Helpers.FileDir.SmartCreateFolder(_appDataPathLogs);
+        if (!File.Exists(_appFileReviews))
         {
             var obj = new List<Review>();
             JsonTools.SaveOptions(_appFileReviews, JsonSerializer.Serialize(obj));
         }
-        bool createUsers = false;
+
+        User? adminUser = User.DefaultAdminUser(1);
         if (!File.Exists(_appFileUsers))
         {
-            createUsers = true;
             UserBase obj = new UserBase();
             PasswordHash hash = new PasswordHash();
-            obj.Add(User.DefaultAdminUser());
+            obj.Add(adminUser);
             obj.Commit();
         }
         if (!File.Exists(_appFileSettings))
         {
             var obj = new Settings();
-            if (createUsers)
-            {
-                UserBase users = new UserBase();
-                users.Load();
-                obj.LastUser = users.GetUserByUsername(_adminUsername) ?? new User();
-            }
+            obj.LastUser = adminUser;
             obj.Commit();
         }
-        
-        
     }
-
-    public static void SmartDeleteDirectory(string directory)
-    {
-        if (Directory.Exists(directory))
-        {
-            var di = new DirectoryInfo(directory);
-            foreach (var f in di.GetFiles())
-            {
-                f.Delete();
-            }
-            Directory.Delete(directory);
-        }
-    }
-
-    public static void SmartDeleteFile(string file)
-    {
-        if (File.Exists(file))
-        {
-            File.Delete(file);
-        }
-    }
-    
 }

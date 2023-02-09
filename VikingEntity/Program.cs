@@ -9,14 +9,18 @@ internal static class Program
 {
     private static Enums.ViewMode _viewMode = Enums.ViewMode.Main;
     public static Settings Settings = new Settings();
-    public static AppFiles AppFiles = new AppFiles();
-    public static User CurrentUser = new User();
     public static UserBase UserBase = new UserBase();
-    static void Main(string[] p_args)
+    public static User CurrentUser = new User();
+    public static AppFiles AppFiles = new AppFiles();
+    static async Task Main(string[] p_args)
     {
         Settings.Load();
         UserBase.Load();
+        
+        
         CurrentUser = Settings.LastUser;
+        ReviewCrawler crawler = new ReviewCrawler();
+        await crawler.StartCrawlerAsync();
 
         if ((Settings.LastUser.Oid > 0 && DateTime.UtcNow.Subtract(Settings.LastUser.LastLogin).TotalHours > Settings.LoginClaimHours))
         {
@@ -26,7 +30,6 @@ internal static class Program
             Settings.Commit();
             _viewMode = Enums.ViewMode.Login;
         }
-        Settings.Load();
         if (CurrentUser.Oid == 0)
         {
             _viewMode = Enums.ViewMode.Login;
@@ -34,7 +37,6 @@ internal static class Program
         else
         {
             CurrentUser.LastLogin = DateTime.UtcNow;
-            CurrentUser.Save();
             Settings.LastUser = CurrentUser;
             Settings.Commit();
         }
@@ -45,12 +47,12 @@ internal static class Program
             _viewMode = _viewMode switch
             {
                 Enums.ViewMode.Login => LoginView.Display(),
-                Enums.ViewMode.Main => MainView.Display(),
+                Enums.ViewMode.Main => MainView.Display().Result,
                 Enums.ViewMode.Admin => AdminView.Display(),
                 Enums.ViewMode.Settings => SettingsView.Display(),
-                Enums.ViewMode.User => UserMgntView.Display(),
+                Enums.ViewMode.User => UserManageView.Display(),
                 Enums.ViewMode.Exit => Enums.ViewMode.Exit,
-                _ => MainView.Display()
+                _ => MainView.Display().Result
             };
         }
         Console.WriteLine("Goodbye!");

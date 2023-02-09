@@ -11,24 +11,27 @@ public class User : IUser
     public bool RequirePasswordChange { get; set; } = false;
     public DateTime DateCreated { get; set; } = DateTime.UtcNow;
     public DateTime LastLogin { get; set; }
-    public List<Enums.AdminRole> Roles { get; set; } = new List<Enums.AdminRole>() { Enums.AdminRole.BasicUser };
+    public List<Enums.AdminRole> Roles { get; set; } = new();
 
     public string FullName => $"{FirstName} {LastName}";
+    public bool IsRootUser { get; set; } = false;
 
     public void Save()
     {
+        DateCreated = DateTime.UtcNow;
         UserBase users = new UserBase();
         users.Load();
         users.Add(this);
         users.Commit();
     }
     
-    public static User DefaultAdminUser()
+    public static User DefaultAdminUser(int p_oid)
     {
         PasswordHash hash = new PasswordHash();
         return new User()
         {
-            Oid = 1,
+            Oid = p_oid,
+            IsRootUser = true,
             UserName = "admin",
             FirstName = "Admin",
             LastName = "User",

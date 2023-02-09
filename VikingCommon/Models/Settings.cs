@@ -27,7 +27,9 @@ public class Settings : ISettings
         Console.WriteLine($"LoginClaim: {LoginClaimHours} hours");
         Console.WriteLine($"LastUser: {LastUser.UserName}");
         Console.WriteLine($"         : {LastUser.FirstName} {LastUser.LastName}");
-        Console.WriteLine($"         : {LastUser.LastLogin}");
+        Console.WriteLine($"         : {LastUser.LastLogin} - last login");
+        Console.WriteLine($"         : {LastUser.DateCreated} - created");
+        Console.WriteLine($"         : {LastUser.IsRootUser} - root");
     }
 
 
@@ -62,7 +64,6 @@ public class Settings : ISettings
     public void Update(string p_settingName, string p_settingValue)
     {
         var settings = new Settings();
-        settings.Load();
         var setting = settings.GetType().GetProperty(p_settingName);
         if (setting == null)
         {

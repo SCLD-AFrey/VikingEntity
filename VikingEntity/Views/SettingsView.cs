@@ -21,10 +21,10 @@ public static class SettingsView
 
             switch (input)
             {
-                case ConsoleKey.D1:
+                case ConsoleKey.V:
                     Program.Settings.Display();
                     break;
-                case ConsoleKey.D2:
+                case ConsoleKey.C:
                     UpdateSettings();
                     break;
                 case ConsoleKey.X:
@@ -51,6 +51,7 @@ public static class SettingsView
         try
         {
             Program.Settings.Update(_setting, _value);
+            Program.Settings.Commit();
             Program.Settings.Load();
             Console.WriteLine($"Setting '{_setting}' set to '{_value}'");
         } catch (Exception e)
