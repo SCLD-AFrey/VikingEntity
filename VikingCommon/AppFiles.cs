@@ -7,6 +7,8 @@ namespace VikingCommon;
 
 public class AppFiles
 {
+    private static bool _force { get; set; }
+    
     private static string _appName = ".vikingentity";
     //Folders
     public static readonly string _appDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), ".vikingentity");
@@ -22,14 +24,15 @@ public class AppFiles
     public static string _appChatGptApiKey = @"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";
     
 
-    public AppFiles()
+    public AppFiles(bool p_force = false)
     {
-        Create();
+        _force = p_force;
+        Create(_force);
     }
 
-    private static void Create(bool force = false)
+    private static void Create(bool p_force = false)
     {
-        if (force)
+        if (p_force)
         {
             Helpers.FileDir.SmartDeleteFolder(_appDataPath);
         }

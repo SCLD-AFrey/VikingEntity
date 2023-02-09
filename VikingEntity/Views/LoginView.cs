@@ -40,6 +40,7 @@ public class LoginView
 
         Program.Settings.LastUser = user;
         Program.Settings.LastUser.LastLogin = DateTime.UtcNow;
+        Program.CurrentUser = Program.Settings.LastUser;
         Program.Settings.Commit();
         
         return Enums.ViewMode.Main;

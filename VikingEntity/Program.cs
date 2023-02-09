@@ -41,7 +41,9 @@ internal static class Program
             Settings.Commit();
         }
 
-        Console.WriteLine($"Main Menu {Program.Settings.AppName} - {CurrentUser.FullName}");
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine($"Welcome to {Program.Settings.AppName} - {CurrentUser.FullName}");
+        Console.ResetColor();
         while (_viewMode != Enums.ViewMode.Exit)
         {
             _viewMode = _viewMode switch

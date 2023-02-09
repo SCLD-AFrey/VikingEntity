@@ -38,7 +38,7 @@ public static class AdminView
     {
         try
         {
-            Program.AppFiles = new AppFiles();
+            Program.AppFiles = new AppFiles(true);
             Console.WriteLine("Data files reset");
         }
         catch (Exception e)

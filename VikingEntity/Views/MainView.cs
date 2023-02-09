@@ -31,6 +31,7 @@ public static class MainView
                 case ConsoleKey.D2:
                     break;
                 case ConsoleKey.A:
+                    return Enums.ViewMode.Admin;
                     break;
                 case ConsoleKey.R:
                     await GetApReviews();
