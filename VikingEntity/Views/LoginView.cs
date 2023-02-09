@@ -30,7 +30,10 @@ public class LoginView
         if (!hash.VerifyPassword(password, user.Password, user.Salt))
         {
             Console.WriteLine("Invalid username or password");
-            Program.Settings.LastUser = new User();
+            Program.Settings.LastUser = new User
+            {
+                LastLogin = DateTime.UtcNow
+            };
             Program.Settings.Commit();
             return Enums.ViewMode.Login;
         }
@@ -40,8 +43,5 @@ public class LoginView
         Program.Settings.Commit();
         
         return Enums.ViewMode.Main;
-
-
-
     }
 }

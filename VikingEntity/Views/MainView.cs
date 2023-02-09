@@ -10,7 +10,6 @@ public static class MainView
         ConsoleKey input = ConsoleKey.NoName;
         while (true)
         {
-            Console.WriteLine($"Main Menu {Program.Settings.AppName}");
             MenuItem.Display('1', "Operation 1", Enums.AdminRole.BasicUser);
             MenuItem.Display('2', "Operation 2", Enums.AdminRole.BasicUser);
             MenuItem.Display('S', "Settings", Enums.AdminRole.BasicUser);

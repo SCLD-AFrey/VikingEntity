@@ -39,6 +39,7 @@ internal static class Program
             Settings.Commit();
         }
 
+        Console.WriteLine($"Main Menu {Program.Settings.AppName} - {CurrentUser.FullName}");
         while (_viewMode != Enums.ViewMode.Exit)
         {
             _viewMode = _viewMode switch

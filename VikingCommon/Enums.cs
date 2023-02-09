@@ -18,6 +18,6 @@ public class Enums
         BasicUser = 0,
         UserManagement = 1,
         SettingsManagement = 2,
-        Admin = BasicUser | UserManagement | SettingsManagement
+        Administrator = 4,
     }
 }

@@ -13,7 +13,7 @@ public static class SettingsView
         {
             Console.WriteLine("Settings Menu");
             MenuItem.Display('V', "View Current Settings", Enums.AdminRole.BasicUser);
-            MenuItem.Display('C', "Change Settings", Enums.AdminRole.Admin);
+            MenuItem.Display('C', "Change Settings", Enums.AdminRole.SettingsManagement);
             MenuItem.Display('X', "<= Back", Enums.AdminRole.BasicUser);
             
             input = Console.ReadKey().Key;

@@ -52,19 +52,7 @@ public class AppFiles
             createUsers = true;
             UserBase obj = new UserBase();
             PasswordHash hash = new PasswordHash();
-            
-            obj.Add(new User()
-            {
-                Oid = obj.GetNextOid(),
-                UserName = _adminUsername,
-                FirstName = "Admin", 
-                LastName = "User",
-                Password = hash.GeneratePasswordHash("password", out var salt),
-                Salt = salt,
-                LastLogin = DateTime.UtcNow,
-                Roles = { Enums.AdminRole.BasicUser, Enums.AdminRole.SettingsManagement, Enums.AdminRole.SettingsManagement, Enums.AdminRole.Admin }
-            });
-            
+            obj.Add(User.DefaultAdminUser());
             obj.Commit();
         }
         if (!File.Exists(_appFileSettings))
