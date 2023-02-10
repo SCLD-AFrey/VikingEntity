@@ -11,15 +11,15 @@ public static class MainView
         ConsoleKey input = ConsoleKey.NoName;
         while (true)
         {
-            MenuItem.Display('1', "Operation 1", Enums.AdminRole.BasicUser);
-            MenuItem.Display('2', "Operation 2", Enums.AdminRole.BasicUser);
-            MenuItem.Display('R', "Get AP Reviews", Enums.AdminRole.BasicUser);
-            MenuItem.Display('S', "Settings", Enums.AdminRole.BasicUser);
-            MenuItem.Display('U', "Users", Enums.AdminRole.BasicUser);
-            MenuItem.Display('A', "Admin", Enums.AdminRole.BasicUser);
-            MenuItem.Display('Q', "<= Quit", Enums.AdminRole.BasicUser);
-            MenuItem.Display('L', "<= Logout and Quit", Enums.AdminRole.BasicUser);
-            MenuItem.Display('C', "<= Logout and Change Users", Enums.AdminRole.BasicUser);
+            MenuItem.Display('1', "Operation 1");
+            MenuItem.Display('G', "Chat Gpt");
+            MenuItem.Display('R', "Get AP Reviews");
+            MenuItem.Display('S', "Settings");
+            MenuItem.Display('U', "Users");
+            MenuItem.Display('A', "Admin");
+            MenuItem.Display('Q', "<= Quit");
+            MenuItem.Display('L', "<= Logout and Quit");
+            MenuItem.Display('C', "<= Logout and Change Users");
             
             input = Console.ReadKey().Key;
             Console.WriteLine();
@@ -120,7 +120,7 @@ public static class MainView
                 case ConsoleKey.F:
                     break;
                 case ConsoleKey.G:
-                    break;
+                    return Enums.ViewMode.ChatGpt;
                 case ConsoleKey.H:
                     break;
                 case ConsoleKey.I:

@@ -12,15 +12,14 @@ internal static class Program
     public static UserBase UserBase = new UserBase();
     public static User CurrentUser = new User();
     public static AppFiles AppFiles = new AppFiles();
-    static async Task Main(string[] p_args)
+    static Task Main(string[] p_args)
     {
         Settings.Load();
         UserBase.Load();
-        
-        
+
         CurrentUser = Settings.LastUser;
-        ReviewCrawler crawler = new ReviewCrawler();
-        await crawler.StartCrawlerAsync();
+        // ReviewCrawler crawler = new ReviewCrawler();
+        // await crawler.StartCrawlerAsync();
 
         if ((Settings.LastUser.Oid > 0 && DateTime.UtcNow.Subtract(Settings.LastUser.LastLogin).TotalHours > Settings.LoginClaimHours))
         {
@@ -53,10 +52,12 @@ internal static class Program
                 Enums.ViewMode.Admin => AdminView.Display(),
                 Enums.ViewMode.Settings => SettingsView.Display(),
                 Enums.ViewMode.User => UserManageView.Display(),
+                Enums.ViewMode.ChatGpt => ChatGptView.Display().Result,
                 Enums.ViewMode.Exit => Enums.ViewMode.Exit,
                 _ => MainView.Display().Result
             };
         }
         Console.WriteLine("Goodbye!");
+        return Task.CompletedTask;
     }
 }

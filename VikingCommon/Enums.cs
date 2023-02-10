@@ -9,7 +9,8 @@ public class Enums
         Settings,
         User,
         Exit,
-        Login
+        Login,
+        ChatGpt
     }
 
     [Flags]

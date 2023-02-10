@@ -10,6 +10,8 @@ public class Settings : ISettings
     public string AppDescription { get; set; } = "Viking Tools is a collection of tools for the Viking Age.";
     public string AppAuthor { get; set; } = "Viking Tools Utd.";
     public User LastUser { get; set; } = new User();
+    public string OpenAiApiKey { get; set; } = @"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";
+    
     
     public int LoginClaimHours { get; set; } = 24;
 

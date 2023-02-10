@@ -20,9 +20,6 @@ public class AppFiles
     public static string _appFileUsers = Path.Combine(_appDataPath, "users.json");
     public static string _appFileReviews = Path.Combine(_appDataPath, "ap-reviews.json");
     
-    //API Keys
-    public static string _appChatGptApiKey = @"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";
-    
 
     public AppFiles(bool p_force = false)
     {
