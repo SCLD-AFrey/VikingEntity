@@ -18,6 +18,13 @@ internal static class Program
         UserBase.Load();
 
         CurrentUser = Settings.LastUser;
+
+
+        var rems = new ReminderBase();
+
+
+
+        Console.ReadLine();
         // ReviewCrawler crawler = new ReviewCrawler();
         // await crawler.StartCrawlerAsync();
 

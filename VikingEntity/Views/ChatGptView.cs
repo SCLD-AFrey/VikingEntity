@@ -51,7 +51,7 @@ public static class ChatGptView
             var completionResult = await openAiService.Completions.CreateCompletion(new CompletionCreateRequest()
             {
                 Prompt = prompt,
-                Model = Models.TextDavinciV3
+                //Model = Models.TextDavinciV3
             });
 
             if (completionResult.Successful)

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VikingAvalonia", "VikingAva
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VikingEntity", "VikingEntity\VikingEntity.csproj", "{DB34B598-8878-4A3F-B25A-B9DEF62A9B23}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonBase", "JsonBase\JsonBase.csproj", "{552225D4-72DD-442B-8EFB-107714D97E7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{DB34B598-8878-4A3F-B25A-B9DEF62A9B23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB34B598-8878-4A3F-B25A-B9DEF62A9B23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB34B598-8878-4A3F-B25A-B9DEF62A9B23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{552225D4-72DD-442B-8EFB-107714D97E7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{552225D4-72DD-442B-8EFB-107714D97E7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{552225D4-72DD-442B-8EFB-107714D97E7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{552225D4-72DD-442B-8EFB-107714D97E7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

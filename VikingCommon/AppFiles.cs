@@ -19,7 +19,8 @@ public class AppFiles
     public static string _appFileSettings = Path.Combine(_appDataPath, "settings.json");
     public static string _appFileUsers = Path.Combine(_appDataPath, "users.json");
     public static string _appFileReviews = Path.Combine(_appDataPath, "ap-reviews.json");
-    
+    public static string _appFileReminders = Path.Combine(_appDataPath, "reminders.json");
+
 
     public AppFiles(bool p_force = false)
     {
