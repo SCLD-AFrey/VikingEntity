@@ -11,7 +11,7 @@ public static class MainView
         ConsoleKey input = ConsoleKey.NoName;
         while (true)
         {
-            MenuItem.Display('1', "Operation 1");
+            MenuItem.Display('1', "Add Reminder");
             MenuItem.Display('G', "Chat Gpt");
             MenuItem.Display('R', "Get AP Reviews");
             MenuItem.Display('S', "Settings");
@@ -27,6 +27,7 @@ public static class MainView
             switch (input)
             {
                 case ConsoleKey.D1:
+                    ShowAddReminder();
                     break;
                 case ConsoleKey.D2:
                     break;
@@ -326,6 +327,16 @@ public static class MainView
                     break;
             }
         }
+    }
+
+    private static void ShowAddReminder()
+    {
+        ReminderBase reminderBase = new ReminderBase();
+        Reminder reminder = new Reminder();
+        reminder.Title = SafeInput.String("Title: ");
+        reminder.Description = SafeInput.String("Description: ", true);
+        reminder.RemindDateTime = SafeInput.Date("Date/Time: ");
+        reminder.Save();
     }
 
     private static async Task GetApReviews()

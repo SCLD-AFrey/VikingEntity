@@ -19,6 +19,7 @@ public class AppFiles
     public static string _appFileSettings = Path.Combine(_appDataPath, "settings.json");
     public static string _appFileUsers = Path.Combine(_appDataPath, "users.json");
     public static string _appFileReviews = Path.Combine(_appDataPath, "ap-reviews.json");
+    public static string _appFileReminders = Path.Combine(_appDataPath, "reminders.json");
     
 
     public AppFiles(bool p_force = false)
@@ -51,10 +52,9 @@ public class AppFiles
             obj.Add(adminUser);
             obj.Commit();
         }
-        if (!File.Exists(_appFileSettings))
+        if (!File.Exists(_appFileReminders))
         {
-            var obj = new Settings();
-            obj.LastUser = adminUser;
+            ReminderBase obj = new ReminderBase();
             obj.Commit();
         }
     }
