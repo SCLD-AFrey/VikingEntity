@@ -1,6 +1,5 @@
 ﻿using System.Runtime.InteropServices.ComTypes;
 using VikingCommon;
-using VikingCommon.Models;
 
 namespace VikingEntity.Views;
 

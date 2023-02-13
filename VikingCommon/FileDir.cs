@@ -1,4 +1,4 @@
-﻿namespace VikingCommon.Helpers;
+﻿namespace VikingCommon;
 
 public static class FileDir
 {

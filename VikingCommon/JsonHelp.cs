@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace VikingCommon.Helpers;
+namespace VikingCommon;
 
 public static class JsonHelp
 {

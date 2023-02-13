@@ -17,8 +17,8 @@ public static class LoginView
             return Task.FromResult(Program._viewModePrev);
         }
         Program.Currentuser = new User();
-        Program.SettingBase.Set("lastuseroid", "0");
-        Program.SettingBase.Commit();
+        Program.Settings.Set("lastuseroid", "0");
+        Program.Settings.Commit();
         opt = SafeInput.Char("Are you sure you want to quit? (y/n): ");
         if (opt == 'y' || opt == 'Y')
         {
@@ -47,7 +47,7 @@ public static class LoginView
         }
         
         Program.Currentuser = user;
-        Program.SettingBase.Set("lastuseroid", user.Oid.ToString());
+        Program.Settings.Set("lastuseroid", user.Oid.ToString());
         
         
         return Task.FromResult(Enums.ViewMode.Main);

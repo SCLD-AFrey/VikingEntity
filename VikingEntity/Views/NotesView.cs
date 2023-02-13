@@ -5,10 +5,11 @@ namespace VikingEntity.Views;
 
 public static class NotesView
 {
-    private static NotesBase notesBase = new NotesBase();
+    private static readonly NotesBase NotesBase = new NotesBase();
     public static Enums.ViewMode Display()
     {
-        ConsoleKey input = ConsoleKey.NoName;
+        // ReSharper disable once TooWideLocalVariableScope
+        ConsoleKey input;
         while (true)
         {
             Console.WriteLine("Admin Menu");
@@ -39,7 +40,7 @@ public static class NotesView
     private static void ViewAll()
     {
         int i = 0;
-        foreach (var note in notesBase.Where(p_x => p_x.IsDeleted == false))
+        foreach (var note in NotesBase.Where(p_x => p_x.IsDeleted == false))
         {
             i++;
             Console.WriteLine($"{i + ".", -3} {note.Title}");
@@ -48,12 +49,14 @@ public static class NotesView
 
     private static void AddNote()
     {
-        Note note = new Note();
-        note.Oid = notesBase.GetNextOid();
-        note.Title = SafeInput.String("Title");
-        note.Content = SafeInput.String("Content");
-        note.UserOid = Program.Currentuser.Oid;
-        notesBase.Add(note);
-        notesBase.Commit();
+        Note note = new Note
+        {
+            Oid = NotesBase.GetNextOid(),
+            Title = SafeInput.String("Title")!,
+            Content = SafeInput.String("Content")!,
+            UserOid = Program.Currentuser.Oid
+        };
+        NotesBase.Add(note);
+        NotesBase.Commit();
     }
 }

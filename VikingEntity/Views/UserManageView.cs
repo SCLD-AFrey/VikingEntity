@@ -1,5 +1,4 @@
 ﻿using VikingCommon;
-using VikingCommon.Models;
 
 namespace VikingEntity.Views;
 

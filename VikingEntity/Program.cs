@@ -1,6 +1,5 @@
-﻿using System.Diagnostics;
+﻿
 using VikingCommon;
-using VikingCommon.Models;
 using VikingEntity.Models;
 using VikingEntity.Views;
 
@@ -12,16 +11,16 @@ internal static class Program
     public static Enums.ViewMode _viewModePrev;
     public static readonly UserBase UserBase = new UserBase();
     public static NotesBase NotesBase = new NotesBase();
-    public static SettingBase SettingBase = new SettingBase();
+    public static SettingBase Settings = new SettingBase();
     public static User Currentuser;
     
     static Task Main(string[] p_args)
     {
         Helpers.InitJsonBase.Init();
-        Currentuser = UserBase.FirstOrDefault(p_x => p_x.Oid == int.Parse(SettingBase.Get("lastuseroid") ?? string.Empty))  ?? new User();
+        Currentuser = UserBase.FirstOrDefault(p_x => p_x.Oid == int.Parse(Settings.Get("lastuseroid") ?? string.Empty))  ?? new User();
 
         Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine($"Welcome to {SettingBase.Get("appname")}");
+        Console.WriteLine($"Welcome to {Settings.Get("appname")}");
         Console.ResetColor();
 
         _viewMode = Currentuser.Oid == 0 ? Enums.ViewMode.Login : Enums.ViewMode.Main;

@@ -10,7 +10,7 @@ public abstract class JsonBase<T> : Collection<T> , IJsonBase
 {
     public string StoragePath { get; set; }
     public string StorageFile { get; set; }
-    public string DataColumn { get; set; } = "Oid";
+    public string UniqueDataColumn { get; set; } = "Oid";
 
     public string Name { get; set; } = typeof(T).Name;
     protected JsonBase()
@@ -39,6 +39,7 @@ public abstract class JsonBase<T> : Collection<T> , IJsonBase
             File.WriteAllText(StorageFile, "[]");
         } 
         var jsonString = File.ReadAllText(StorageFile);
+        // ReSharper disable once SuggestVarOrType_BuiltInTypes
         foreach (dynamic v in JsonConvert.DeserializeObject<dynamic>(jsonString)!)
         {
             var obj = JsonConvert.DeserializeObject<T>(v.ToString());
@@ -52,6 +53,6 @@ public abstract class JsonBase<T> : Collection<T> , IJsonBase
         {
             return 1;
         }
-        return this.Max(p_x => (int)(p_x!.GetType().GetProperty(DataColumn)?.GetValue(p_x) ?? 0)) + 1;
+        return this.Max(p_x => (int)(p_x!.GetType().GetProperty(UniqueDataColumn)?.GetValue(p_x) ?? 0)) + 1;
     }
 }
