@@ -11,9 +11,4 @@
       <ProjectReference Include="..\VikingCommon\VikingCommon.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Helpers" />
-      <Folder Include="Models" />
-    </ItemGroup>
-
 </Project>

@@ -37,41 +37,38 @@ public static class ChatGptView
         
     }
 
-    private static async Task AskQuestion()
+    private static Task AskQuestion()
     {
-        string prompt = "";
-        var openAiService = new OpenAIService(new OpenAiOptions()
-        {
-            ApiKey =  Program.Settings.OpenAiApiKey
-        });
-        while (prompt.ToLower() != "exit") {
-        
-            prompt = SafeInput.String("Q: ")!;
-        
-            var completionResult = await openAiService.Completions.CreateCompletion(new CompletionCreateRequest()
-            {
-                Prompt = prompt,
-                //Model = Models.TextDavinciV3
-            });
-
-            if (completionResult.Successful)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("A: " + completionResult.Choices.FirstOrDefault()!.Text);
-                Console.ResetColor();
-            }
-            else
-            {
-                if (completionResult.Error == null)
-                {
-                    throw new Exception("Unknown Error");
-                }
-                Console.WriteLine($"{completionResult.Error.Code}: {completionResult.Error.Message}");
-            }
-        }
-        
-        
-        
-        
+        return Task.CompletedTask;
+        // string prompt = "";
+        // var openAiService = new OpenAIService(new OpenAiOptions()
+        // {
+        //     ApiKey =  Program.Settings.OpenAiApiKey
+        // });
+        // while (prompt.ToLower() != "exit") {
+        //
+        //     prompt = SafeInput.String("Q: ")!;
+        //
+        //     var completionResult = await openAiService.Completions.CreateCompletion(new CompletionCreateRequest()
+        //     {
+        //         Prompt = prompt,
+        //         //Model = Models.TextDavinciV3
+        //     });
+        //
+        //     if (completionResult.Successful)
+        //     {
+        //         Console.ForegroundColor = ConsoleColor.Green;
+        //         Console.WriteLine("A: " + completionResult.Choices.FirstOrDefault()!.Text);
+        //         Console.ResetColor();
+        //     }
+        //     else
+        //     {
+        //         if (completionResult.Error == null)
+        //         {
+        //             throw new Exception("Unknown Error");
+        //         }
+        //         Console.WriteLine($"{completionResult.Error.Code}: {completionResult.Error.Message}");
+        //     }
+        // }
     }
 }

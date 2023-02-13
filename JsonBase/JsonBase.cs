@@ -1,20 +1,27 @@
-﻿using System.Text.Json;
+﻿using System.Collections.ObjectModel;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace JsonBase;
 
-public abstract class JsonBase<T> : List<T> , IJsonBase
+public abstract class JsonBase<T> : Collection<T> , IJsonBase
 {
-    private readonly string _storageFileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments), $"_appFile{typeof(T).Name}.json");
+    public string StoragePath { get; set; }
+    public string StorageFile { get; set; }
+    public string DataColumn { get; set; } = "Oid";
 
-    protected JsonBase(bool p_load = true)
+    public string Name { get; set; } = typeof(T).Name;
+    protected JsonBase()
     {
-        if (p_load)
+        StoragePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), ".jsonbase");
+        StorageFile = Path.Combine(StoragePath, $"_appDataFile{typeof(T).Name}.json");
+        if (!Directory.Exists(StoragePath))
         {
-            Load();
+            Directory.CreateDirectory(StoragePath);
         }
+        Load();
     }
     
     public void Commit()
@@ -22,26 +29,29 @@ public abstract class JsonBase<T> : List<T> , IJsonBase
         JsonSerializerOptions options = 
             new() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
         var jsonString = JsonSerializer.Serialize(this, options);
-        File.WriteAllText(_storageFileName, jsonString);
+        File.WriteAllText(StorageFile, jsonString);
     }
     
     public void Load()
     {
-        T? objs;
-        if (!File.Exists(_storageFileName))
+        if (!File.Exists(StorageFile))
         {
-            File.WriteAllText(_storageFileName, "[]");
+            File.WriteAllText(StorageFile, "[]");
         } 
-        var jsonString = File.ReadAllText(_storageFileName);
+        var jsonString = File.ReadAllText(StorageFile);
         foreach (dynamic v in JsonConvert.DeserializeObject<dynamic>(jsonString)!)
         {
             var obj = JsonConvert.DeserializeObject<T>(v.ToString());
-            this.Add(obj);
+            Items.Add(obj);
         }
-       
-
     }
-    
-    
-    
+
+    public int GetNextOid()
+    {
+        if (this.Count == 0)
+        {
+            return 1;
+        }
+        return this.Max(p_x => (int)(p_x!.GetType().GetProperty(DataColumn)?.GetValue(p_x) ?? 0)) + 1;
+    }
 }

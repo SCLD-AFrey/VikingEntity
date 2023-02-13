@@ -22,7 +22,7 @@ public static class SettingsView
             switch (input)
             {
                 case ConsoleKey.V:
-                    Program.Settings.Display();
+                    //Program.Settings.Display();
                     break;
                 case ConsoleKey.C:
                     UpdateSettings();
@@ -39,24 +39,6 @@ public static class SettingsView
 
     private static void UpdateSettings()
     {
-        string _setting = "";
-        string _value = "";
-        while (string.IsNullOrEmpty(_setting) || string.IsNullOrEmpty(_value))
-        {
-            Console.Write("Setting Name: ");
-            _setting = Console.ReadLine();
-            Console.Write("Setting Value: ");
-            _value = Console.ReadLine();
-        }
-        try
-        {
-            Program.Settings.Update(_setting, _value);
-            Program.Settings.Commit();
-            Program.Settings.Load();
-            Console.WriteLine($"Setting '{_setting}' set to '{_value}'");
-        } catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-        }
+
     }
 }

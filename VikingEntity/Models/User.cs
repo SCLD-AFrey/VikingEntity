@@ -1,6 +1,8 @@
-﻿namespace VikingCommon.Models;
+﻿using VikingCommon;
 
-public class User : IUser
+namespace VikingEntity.Models;
+
+public class User
 {
     public int Oid { get; set; } = 0;
     public string UserName { get; set; } = string.Empty;
@@ -16,15 +18,6 @@ public class User : IUser
     public string FullName => $"{FirstName} {LastName}";
     public bool IsRootUser { get; set; } = false;
 
-    public void Save()
-    {
-        DateCreated = DateTime.UtcNow;
-        UserBase users = new UserBase();
-        users.Load();
-        users.Add(this);
-        users.Commit();
-    }
-    
     public static User DefaultAdminUser(int p_oid)
     {
         PasswordHash hash = new PasswordHash();

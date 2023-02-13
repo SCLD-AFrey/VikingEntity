@@ -6,20 +6,20 @@ namespace VikingEntity.Views;
 
 public static class MainView
 {
-    public static async Task<Enums.ViewMode> Display()
+    public static Task<Enums.ViewMode> Display()
     {
         ConsoleKey input = ConsoleKey.NoName;
         while (true)
         {
-            MenuItem.Display('1', "Operation 1");
+            Console.WriteLine($"Welcome {Program.Currentuser.FullName}");;
+            MenuItem.Display('N', "Notes");
             MenuItem.Display('G', "Chat Gpt");
             MenuItem.Display('R', "Get AP Reviews");
             MenuItem.Display('S', "Settings");
             MenuItem.Display('U', "Users");
             MenuItem.Display('A', "Admin");
+            MenuItem.Display('L', "<= Logout");
             MenuItem.Display('Q', "<= Quit");
-            MenuItem.Display('L', "<= Logout and Quit");
-            MenuItem.Display('C', "<= Logout and Change Users");
             
             input = Console.ReadKey().Key;
             Console.WriteLine();
@@ -31,20 +31,18 @@ public static class MainView
                 case ConsoleKey.D2:
                     break;
                 case ConsoleKey.A:
-                    return Enums.ViewMode.Admin;
+                    return Task.FromResult(Enums.ViewMode.Admin);
                     break;
                 case ConsoleKey.R:
-                    await GetApReviews();
                     break;
                 case ConsoleKey.S:
-                    return Enums.ViewMode.Settings;
+                    return Task.FromResult(Enums.ViewMode.Settings);
                 case ConsoleKey.U:
-                    return Enums.ViewMode.User;
+                    return Task.FromResult(Enums.ViewMode.User);
                 case ConsoleKey.L:
-                    DoLogout();
-                    return Enums.ViewMode.Exit;
+                    return LoginView.Logout();
                 case ConsoleKey.Q:
-                    return Enums.ViewMode.Exit;
+                    return LoginView.Quit();
                 case ConsoleKey.Backspace:
                     break;
                 case ConsoleKey.Tab:
@@ -108,10 +106,6 @@ public static class MainView
                 case ConsoleKey.B:
                     break;
                 case ConsoleKey.C:
-                    Program.CurrentUser = new User();
-                    Program.Settings.LastUser = Program.CurrentUser;
-                    Program.Settings.Commit();
-                    return Enums.ViewMode.Login;
                     break;
                 case ConsoleKey.D:
                     break;
@@ -120,7 +114,7 @@ public static class MainView
                 case ConsoleKey.F:
                     break;
                 case ConsoleKey.G:
-                    return Enums.ViewMode.ChatGpt;
+                    return Task.FromResult(Enums.ViewMode.ChatGpt);
                 case ConsoleKey.H:
                     break;
                 case ConsoleKey.I:
@@ -132,6 +126,7 @@ public static class MainView
                 case ConsoleKey.M:
                     break;
                 case ConsoleKey.N:
+                    return Task.FromResult(Enums.ViewMode.Notes);
                     break;
                 case ConsoleKey.O:
                     break;
@@ -326,28 +321,5 @@ public static class MainView
                     break;
             }
         }
-    }
-
-    private static async Task GetApReviews()
-    {
-        ReviewCrawler crawler = new ReviewCrawler();
-        var reviews = crawler.Load();
-
-        int i = 0;
-        if (reviews != null)
-            foreach (var r in reviews)
-            {
-                i++;
-                Console.WriteLine($"{i,3}. {r.Title} - {r.Author} - {r.Date.ToShortDateString()}");
-                Console.WriteLine($"     {r.Blurb}");
-            }
-    }
-
-    private static void DoLogout()
-    {
-        Program.CurrentUser = new User();
-        Program.Settings.LastUser = Program.CurrentUser;
-        Program.Settings.Commit();
-        Console.WriteLine("Logging out...");
     }
 }
