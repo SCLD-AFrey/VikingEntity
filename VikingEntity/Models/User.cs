@@ -18,6 +18,11 @@ public class User
     public string FullName => $"{FirstName} {LastName}";
     public bool IsRootUser { get; set; } = false;
 
+    public override string ToString()
+    {
+        return $"[{Oid}] - {UserName} - {FullName}";
+    }
+
     public static User DefaultAdminUser(int p_oid)
     {
         PasswordHash hash = new PasswordHash();
