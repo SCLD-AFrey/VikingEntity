@@ -1,4 +1,5 @@
 ﻿
+using JsonBase.Logger;
 using VikingCommon;
 using VikingEntity.Models;
 using VikingEntity.Views;
@@ -10,12 +11,15 @@ internal static class Program
     private static Enums.ViewMode _viewMode;
     public static Enums.ViewMode _viewModePrev;
     public static readonly UserBase UserBase = new UserBase();
-    public static NotesBase NotesBase = new NotesBase();
     public static SettingBase Settings = new SettingBase();
     public static User Currentuser;
+    public static LoggerBase Logger = new LoggerBase();
     
     static Task Main(string[] p_args)
     {
+        //TODO: FIX THIS BELOW
+        Logger.AddEntry("Starting application");
+        
         Helpers.InitJsonBase.Init();
         Currentuser = UserBase.FirstOrDefault(p_x => p_x.Oid == int.Parse(Settings.Get("lastuseroid") ?? string.Empty))  ?? new User();
 

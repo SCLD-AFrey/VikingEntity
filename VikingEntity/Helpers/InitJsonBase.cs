@@ -8,7 +8,6 @@ public static class InitJsonBase
     public static void Init()
     {
         UserBase userBase = Program.UserBase;
-        NotesBase notesBase = Program.NotesBase;
         SettingBase settingBase = Program.Settings;
 
         if(userBase.Count == 0)
