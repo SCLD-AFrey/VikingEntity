@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices.ComTypes;
+using JsonBase.Models.Logging;
 using VikingCommon;
 
 namespace VikingEntity.Views;
@@ -10,13 +11,14 @@ public static class MainView
         ConsoleKey input = ConsoleKey.NoName;
         while (true)
         {
-            Console.WriteLine($"Welcome {Program.Currentuser.FullName}");;
+            Console.WriteLine($"Welcome {Program.CurrentUser.FullName}");;
             MenuItem.Display('N', "Notes");
             MenuItem.Display('G', "Chat Gpt");
             MenuItem.Display('R', "Get AP Reviews");
             MenuItem.Display('S', "Settings");
             MenuItem.Display('U', "Users");
             MenuItem.Display('A', "Admin");
+            MenuItem.Display('V', "View Log");
             MenuItem.Display('L', "<= Logout");
             MenuItem.Display('Q', "<= Quit");
             
@@ -134,6 +136,7 @@ public static class MainView
                 case ConsoleKey.T:
                     break;
                 case ConsoleKey.V:
+                    ViewLogs();
                     break;
                 case ConsoleKey.W:
                     break;
@@ -319,6 +322,25 @@ public static class MainView
                     Console.WriteLine("Invalid input");
                     break;
             }
+        }
+    }
+
+    private static void ViewLogs()
+    {
+        foreach (var log in Program.LoggerBase)
+        {
+            ConsoleColor color = log.LogSeverity switch
+            {
+                LogEntry.Severity.Debug => ConsoleColor.DarkGray,
+                LogEntry.Severity.Info => ConsoleColor.Cyan,
+                LogEntry.Severity.Warning => ConsoleColor.Yellow,
+                LogEntry.Severity.Error => ConsoleColor.Red,
+                LogEntry.Severity.Fatal => ConsoleColor.DarkRed,
+                _ => ConsoleColor.White
+            };
+            Console.ForegroundColor = color;
+            Console.WriteLine(log.ToString());
+            Console.ResetColor();
         }
     }
 }

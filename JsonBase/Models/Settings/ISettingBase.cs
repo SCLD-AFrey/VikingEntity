@@ -1,4 +1,4 @@
-﻿namespace VikingEntity.Models;
+﻿namespace JsonBase.Models.Settings;
 
 public interface ISettingBase
 {

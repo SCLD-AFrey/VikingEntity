@@ -1,4 +1,5 @@
-﻿using VikingCommon;
+﻿using JsonBase.Models.Logging;
+using VikingCommon;
 using VikingEntity.Models;
 
 namespace VikingEntity.Views;
@@ -70,18 +71,24 @@ public static class UserManageView
 
     private static void DisplayAddUser()
     {
-        PasswordHash hash = new PasswordHash();
-        User user = new User();
-        user.Oid = Program.UserBase.GetNextOid();
-        user.UserName = SafeInput.String("Username")!;
-        user.FirstName = SafeInput.String("FirstName")!;
-        user.LastName = SafeInput.String("LastName")!;
-        user.Password = hash.GeneratePasswordHash(SafeInput.String("Password")!, out var salt);
-        user.Salt = salt;
-        user.RequirePasswordChange = SafeInput.Bool("Require Password Change");
-        Program.UserBase.Add(user);
-        Program.UserBase.Commit();
-        Console.WriteLine(user.ToString());
+        try
+        {
+            PasswordHash hash = new PasswordHash();
+            User user = new User();
+            user.Oid = Program.UserBase.GetNextOid();
+            user.UserName = SafeInput.String("Username")!;
+            user.FirstName = SafeInput.String("FirstName")!;
+            user.LastName = SafeInput.String("LastName")!;
+            user.Password = hash.GeneratePasswordHash(SafeInput.String("Password")!, out var salt);
+            user.Salt = salt;
+            user.RequirePasswordChange = SafeInput.Bool("Require Password Change");
+            Program.UserBase.Add(user);
+            Program.UserBase.Commit();
+        }
+        catch (Exception e)
+        {
+            Program.LoggerBase.Log(e.Message, LogEntry.Severity.Error, Program.CurrentUser!.Oid);
+        }
     }
 
     private static void DisplayUsers()

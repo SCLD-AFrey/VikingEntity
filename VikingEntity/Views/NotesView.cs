@@ -54,7 +54,7 @@ public static class NotesView
             Oid = NotesBase.GetNextOid(),
             Title = SafeInput.String("Title")!,
             Content = SafeInput.String("Content")!,
-            UserOid = Program.Currentuser.Oid
+            UserOid = Program.CurrentUser.Oid
         };
         NotesBase.Add(note);
         NotesBase.Commit();

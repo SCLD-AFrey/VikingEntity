@@ -1,8 +1,9 @@
-﻿namespace VikingEntity.Models;
+﻿using JsonBase;
 
-public class Note
+namespace VikingEntity.Models;
+
+public class Note : JsonItem
 {
-    public int Oid { get; set; } = 0;
     public string Title { get; set; } = string.Empty;
     public string Content { get; set; } = string.Empty;
     public DateTime DateCreated { get; set; } = DateTime.UtcNow;

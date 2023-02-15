@@ -1,8 +1,10 @@
-﻿using VikingCommon;
+﻿using JsonBase;
+using JsonBase.Models.Logging;
+using VikingCommon;
 
 namespace VikingEntity.Models;
 
-public class User
+public class User : JsonItem
 {
     public int Oid { get; set; } = 0;
     public string UserName { get; set; } = string.Empty;
@@ -25,18 +27,26 @@ public class User
 
     public static User DefaultAdminUser(int p_oid)
     {
-        PasswordHash hash = new PasswordHash();
-        return new User()
+        try
         {
-            Oid = p_oid,
-            IsRootUser = true,
-            UserName = "admin",
-            FirstName = "Admin",
-            LastName = "User",
-            Password = hash.GeneratePasswordHash("password", out var salt),
-            Salt = salt,
-            LastLogin = DateTime.UtcNow,
-            Roles = { Enums.AdminRole.BasicUser, Enums.AdminRole.SettingsManagement, Enums.AdminRole.UserManagement, Enums.AdminRole.Administrator }
-        };
+            PasswordHash hash = new PasswordHash();
+            return new User()
+            {
+                Oid = p_oid,
+                IsRootUser = true,
+                UserName = "admin",
+                FirstName = "Admin",
+                LastName = "User",
+                Password = hash.GeneratePasswordHash("password", out var salt),
+                Salt = salt,
+                LastLogin = DateTime.UtcNow,
+                Roles = { Enums.AdminRole.BasicUser, Enums.AdminRole.SettingsManagement, Enums.AdminRole.UserManagement, Enums.AdminRole.Administrator }
+            };
+        }
+        catch (Exception e)
+        {
+            Program.LoggerBase.Log(e.Message, LogEntry.Severity.Error, Program.CurrentUser!.Oid);
+            return new User();
+        }
     }
 }

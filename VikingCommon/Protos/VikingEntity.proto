@@ -1,0 +1,18 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+package VikingCommon.Protos;
+
+option csharp_namespace="VikingCommon.Protos";
+
+service VikingEntityRemote{
+	rpc ReturnTime(G_TimeRequest) returns (G_TimeResponse);
+}
+
+message G_TimeRequest{
+	string UserName = 1;
+}
+
+message G_TimeResponse{
+	google.protobuf.Timestamp CurrentTime = 1;
+}
+

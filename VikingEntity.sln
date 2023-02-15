@@ -5,9 +5,9 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VikingCommon", "VikingCommon\VikingCommon.csproj", "{DEA053AE-E28B-4526-A374-0FF92090E830}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VikingEntity", "VikingEntity\VikingEntity.csproj", "{DB34B598-8878-4A3F-B25A-B9DEF62A9B23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VikingEntity", "VikingEntity\VikingEntity.csproj", "{DB34B598-8878-4A3F-B25A-B9DEF62A9B23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonBase", "JsonBase\JsonBase.csproj", "{552225D4-72DD-442B-8EFB-107714D97E7A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonBase", "JsonBase\JsonBase.csproj", "{552225D4-72DD-442B-8EFB-107714D97E7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

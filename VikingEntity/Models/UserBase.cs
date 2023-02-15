@@ -1,4 +1,5 @@
 ﻿using JsonBase;
+using JsonBase.Models.Logging;
 using VikingCommon;
 
 namespace VikingEntity.Models;
@@ -31,8 +32,16 @@ public class UserBase : JsonBase<User>, IUserBase
         };
     }
 
-    public User? GetRootUser()
+    public static User? GetRootUser()
     {
-        return Program.UserBase.FirstOrDefault(p_x => p_x.IsRootUser);
+        try
+        {
+            return Program.UserBase.FirstOrDefault(p_x => p_x.IsRootUser);
+        }
+        catch (Exception e)
+        {
+            Program.LoggerBase.Log(e.Message, LogEntry.Severity.Error, Program.CurrentUser!.Oid);
+            return null;
+        }
     }
 }
